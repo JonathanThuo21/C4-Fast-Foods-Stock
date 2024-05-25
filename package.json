@@ -4,7 +4,8 @@
   "description": "A sample Node.js application",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "build": "npm install"
   },
   "dependencies": {
     "express": "^4.17.1",
@@ -13,3 +14,4 @@
   "author": "Your Name",
   "license": "ISC"
 }
+
