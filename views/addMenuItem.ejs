@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Menu Item</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>Add Menu Item</h1>
+    <form id="addMenuItemForm">
+        <input type="text" id="name" placeholder="Menu Item Name" required>
+        <textarea id="ingredients" placeholder="Ingredients (comma-separated)" required></textarea>
+        <textarea id="quantities" placeholder="Quantities (comma-separated, in the same order as ingredients)" required></textarea>
+        <input type="text" id="energyUsed" placeholder="Energy Used (in kWh or liters)" required>
+        <button type="submit">Add Menu Item</button>
+    </form>
+    <div id="results"></div>
+    <script>
+        document.getElementById('addMenuItemForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const ingredients = document.getElementById('ingredients').value;
+            const quantities = document.getElementById('quantities').value;
+            const energyUsed = document.getElementById('energyUsed').value;
+
+            const response = await fetch('/menuItems', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, ingredients, quantities, energyUsed })
+            });
+
+            const result = await response.json();
+            document.getElementById('results').innerText = result.message;
+        });
+    </script>
+</body>
+</html>

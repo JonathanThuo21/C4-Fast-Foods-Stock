@@ -1,0 +1,53 @@
+/* Global styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa; /* Fallback color */
+    background-image: url('hero-background.jpg'); /* Replace with your image path */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Ensures the background image remains fixed as the user scrolls */
+    color: #333; /* Default text color */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background for content */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Drop shadow for a card-like effect */
+}
+
+/* Styles for specific sections */
+.navbar {
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background for the navbar */
+    color: white; /* Navbar text color */
+    padding: 10px 0;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+h1, h2, h3 {
+    color: #333;
+}
+
+/* Styling for specific elements */
+.btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}

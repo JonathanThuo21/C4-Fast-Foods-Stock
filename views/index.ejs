@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Calculator</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">C4 Stock Calculator</h1>
+        <nav class="mb-4">
+            <a href="/menuItems/new" class="btn btn-primary mr-2">Add New Menu Item</a>
+            <button id="startSession" class="btn btn-success">Start New Calculation Session</button>
+        </nav>
+        <form id="foodForm" style="display:none;">
+            <div class="form-group">
+                <label for="menuItemId">Select a menu item</label>
+                <select id="menuItemId" class="form-control" required>
+                    <option value="" disabled selected>Select a menu item</option>
+                    <% menuItems.forEach(menuItem => { %>
+                        <option value="<%= menuItem._id %>"><%= menuItem.name %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="numItems">Number of Items</label>
+                <input type="number" id="numItems" class="form-control" placeholder="Number of Items" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add to Session</button>
+        </form>
+        <button id="summarizeSession" style="display:none;" class="btn btn-info mt-3">Summarize Session</button>
+        <div id="results" class="mt-3"></div>
+        <h2 class="mt-4">Menu Items</h2>
+        <ul id="menuItemsList" class="list-group">
+            <% menuItems.forEach(menuItem => { %>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <%= menuItem.name %> 
+                    <button onclick="deleteMenuItem('<%= menuItem._id %>')" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Delete</button>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"></script>
+    <!-- Custom Script -->
+    <script>
+        async function deleteMenuItem(id) {
+            const response = await fetch(`/menuItems/${id}`, {
+                method: 'DELETE'
+            });
+            const result = await response.json();
+            alert(result.message);
+            location.reload(); // Reload the page to update the list
+        }
+
+        document.getElementById('startSession').addEventListener('click', async function() {
+            const response = await fetch('/start-session', {
+                method: 'POST'
+            });
+            const result = await response.json();
+            document.getElementById('foodForm').style.display = 'block';
+            document.getElementById('summarizeSession').style.display = 'block';
+            document.getElementById('results').innerText = result.message;
+        });
+
+        document.getElementById('foodForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const menuItemId = document.getElementById('menuItemId').value;
+            const numItems = document.getElementById('numItems').value;
+
+            const response = await fetch('/add-item', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ menuItemId, numItems })
+            });
+
+            const result = await response.json();
+            document.getElementById('results').innerText = result.message;
+        });
+
+        document.getElementById('summarizeSession').addEventListener('click', async function() {
+            const response = await fetch('/summarize-session');
+            const result = await response.json();
+            document.getElementById('results').innerText = JSON.stringify(result.summary, null, 2);
+        });
+    </script>
+</body>
+</html>
