@@ -8,9 +8,10 @@
     "build": "npm install"
   },
   "dependencies": {
-    "express": "^4.17.1",
     "ejs": "^3.1.6",
-    "mongoose": "^6.0.0"  // Add this line
+    "express": "^4.17.1",
+    "express-session": "^1.18.0",
+    "mongoose": "^6.0.0"
   },
   "author": "Your Name",
   "license": "ISC"
