@@ -8,14 +8,11 @@
     "build": "npm install"
   },
   "dependencies": {
-<<<<<<< HEAD
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-session": "^1.18.0",
-=======
     "express": "^4.17.1",
     "ejs": "^3.1.6",
->>>>>>> b96e28e7248734d09d03ef73684303ff9cedf490
     "mongoose": "^6.0.0"
   },
   "author": "Your Name",
